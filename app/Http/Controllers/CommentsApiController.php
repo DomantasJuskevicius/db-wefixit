@@ -19,7 +19,7 @@ class CommentsApiController extends Controller
             'post_id'=>'required',
         ]);
 
-        return Comment::Create([
+        return Comment::create([
             'author'=> request('author'),
             'comment_text' => request('comment_text'),
             'post_id' => request('post_id'),
