@@ -18,10 +18,12 @@ class PostsApiController extends Controller
             'content' => 'required',
         ]);
 
-        return Post::Create([
-            'title' => request('title'),
-            'content' => request('content'),
-        ]);
+        $post = new Post();
+        $post->title = $data['title'];
+        $post->content = $data['content'];
+        $post->save();
+
+        return redirect()->route('posts.index');
     }
 
     public function update(Post $post){
