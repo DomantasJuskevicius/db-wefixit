@@ -18,7 +18,7 @@ class PostsApiController extends Controller
             'content' => 'required',
         ]);
 
-        return Post::Create([
+        return Post::create([
             'title' => request('title'),
             'content' => request('content'),
         ]);
