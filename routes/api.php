@@ -1,9 +1,9 @@
 <?php
 
 use App\Models\Post;
+use App\Http\Controllers\PostsApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,13 +19,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/posts', function(){
-    return Post::all();
-});
+Route::get('/posts', [PostsApiController::class, 'index']);
+Route::post('/posts', [PostsApiController::class, 'store']);
+Route::put('/posts/{post}', [PostsApiController::class, 'update']);
+Route::delete('/posts/{post}', [PostsApiController::class, 'destroy']);
 
-Route::post('/posts', function() {
-    return Post::Create([
-        'title' => request('title'),
-        'content' => request('content'),
-    ]);
-});
+Route::get('/comments', [CommentsApiController::class, 'index']);
+Route::post('/comments', [CommentsApiController::class, 'store']);
+Route::put('/comments/{comment}', [CommentsApiController::class, 'update']);
+Route::delete('/comments/{comments}', [CommentsApiController::class, 'destroy']);
+
+Route::get('/categories', [CategoryApiController::class, 'index']);
+Route::post('/categories', [CategoryApiController::class, 'store']);
+Route::put('/categories/{category}', [CategoryApiController::class, 'update']);
+Route::delete('/categories/{category}', [CategoryApiController::class, 'destroy']);
