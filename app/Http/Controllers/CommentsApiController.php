@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Comment;
 use DB;
+use App\Quotation;
 
 class CommentsApiController extends Controller
 {
-    public function index(){
-        return $comments = DB::table('comments')->where('post_id', 'postid')->get();
+    public function index($postid){
+        return $comments = DB::table('comments')->where('post_id', $postid)->get();
     }
 
     public function store(){
