@@ -51,7 +51,7 @@ class PostsApiController extends Controller
         }
         else{
             return response()->json([
-                "message" => "Post not found"
+                "message" => "Post missing"
             ], 404);
     
         }
@@ -63,12 +63,12 @@ class PostsApiController extends Controller
             $post->delete();
 
             return response()->json([
-                "message" => "it is deleted"
+                "message" => "Post removed"
             ], 200);
         } 
         else{
             return response()->json([
-                "message" => "not found"
+                "message" => "Post missing"
             ], 404);
         }
     }

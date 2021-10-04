@@ -12,6 +12,18 @@ class CategoryApiController extends Controller
         return Category::all();
     }
 
+    public function getCategory($categoryid){
+        if(Category::where('id', $categoryid)->exists()){
+            $category = Category::where('id', $categoryid)->get();
+            return response($category, 200);
+        }
+        else{
+            return response()->json([
+                "message" => "Category not found"
+            ], 404);
+        }
+    }
+
     public function store(){
         request()->validate([
             'title' => 'required',
@@ -24,21 +36,36 @@ class CategoryApiController extends Controller
         ]);
     }
 
-    public function update(Category $category){
-        request()->validate([
-            'title' => 'required',
-            'description' => 'required',
-        ]);
+    public function update(Request $request, $categoryid){
+        if(Category::where('id', $categoryid)->exists()){
+            $category = Category::find($categoryid);
+            $category->title = is_null($request->title) ? $category->title : $request->title;
+            $category->description = is_null($request->description) ? $category->description : $request->description;
+            $category->save();
 
-        $success = $category->update([
-            'title'=> request('title'),
-            'description' => request('description')
-        ]);
-    
-        return['success' => $success];
+            return response()->json([
+                "message" => "category update finished"
+            ], 200);
+        }
+        else{
+            return response()->json([
+                "message" => "category missing"
+            ], 404);
+        }
     }
-    public function destroy(Category $category){
-        $success = $category->delete();
-        return['success' => $success];
+    public function destroy($categoryid){
+        if(Category::where('id', $categoryid)->exists()){
+            $category = Category::find($categoryid);
+            $category->delete();
+
+            return response()->json([
+                "message" => "Category removed"
+            ], 202);
+        }
+        else{
+            return response()->json([
+                "message" => "Category missing"
+            ], 404);
+        }
     }
 }
