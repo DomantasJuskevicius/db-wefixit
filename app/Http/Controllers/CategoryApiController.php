@@ -19,7 +19,7 @@ class CategoryApiController extends Controller
         }
         else{
             return response()->json([
-                "message" => "Category not found"
+                "message" => "Category missing"
             ], 404);
         }
     }

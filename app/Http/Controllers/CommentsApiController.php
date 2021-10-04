@@ -10,11 +10,24 @@ use DB;
 
 class CommentsApiController extends Controller
 {
-    public function index($postid){
-        return $comments = DB::table('comments')->where('post_id', $postid)->get();
+    public function index(){
+        return Comment::all();
     }
 
-    public function store($postid){
+    public function getComment($commentid){
+
+        if (Comment::where('id', $commentid)->exists()) {
+            $comment = Comment::where('id', $commentid)->get();
+            return response($comment, 200);
+        } 
+        else {
+            return response()->json([
+            "message" => "Comment missing"
+            ], 404);
+        }
+    }
+
+    public function store(){
         request()->validate([
             'author' => 'required',
             'comment_text'=> 'required',
@@ -24,29 +37,31 @@ class CommentsApiController extends Controller
         $success = Comment::create([
             'author'=> request('author'),
             'comment_text' => request('comment_text'),
-            'post_id' => request('postid', $postid),
+            'post_id' => request('post_id'),
         ]);
 
         return['success' => $success];
     }
 
-    public function update($postid, Comment $comment){
-        request()->validate([
-            'author' => 'required',
-            'comment_text'=> 'required',
-            'post_id'=>'required',
-        ]);
+    public function update(Request $request, $commentid){
 
-        $success = $comment->update([
-            'author'=> request('title'),
-            'comment_text' => request('content'),
-            'post_id' => request($postid),
-        ]);
-    
-        return['success' => $success];
-    }
-    public function destroy($postid, Comment $comment){
-        $success = $comment->delete();
-        return['success' => $success];
+        if (Comment::where('id', $commentid)->exists()) {
+            $comment = Comment::find($commentid);
+            $comment->author = is_null($request->author) ? $comment->author : $request->author;
+            $comment->comment_text = is_null($request->comment_text) ? $comment->comment_text : $request->comment_text;
+            $comment->post_id = is_null($request->post_id) ? $comment->post_id : $request->post_id;
+            $comment->save();
+
+            return response()->json([
+                "message" => "comment updated"
+            ], 200);
+            } 
+            else {
+            return response()->json([
+                "message" => "Comment missing"
+            ], 404);
+
+        }
+
     }
 }
