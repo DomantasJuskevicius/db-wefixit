@@ -36,6 +36,7 @@ Route::delete('/comments/{comment}', [CommentsApiController::class, 'destroy']);
 
 Route::get('/categories', [CategoryApiController::class, 'index']);
 Route::get('/categories/{category}', [CategoryApiController::class, 'getCategory']);
+Route::get('/categories/{category}/posts', [CategoryApiController::class, 'getCategoryPosts']);
 Route::post('/categories', [CategoryApiController::class, 'store']);
 Route::put('/categories/{category}', [CategoryApiController::class, 'update']);
 Route::delete('/categories/{category}', [CategoryApiController::class, 'destroy']);

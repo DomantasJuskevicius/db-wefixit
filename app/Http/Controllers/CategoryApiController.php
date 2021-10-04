@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Post;
 
 class CategoryApiController extends Controller
 {
@@ -16,6 +17,21 @@ class CategoryApiController extends Controller
         if(Category::where('id', $categoryid)->exists()){
             $category = Category::where('id', $categoryid)->get();
             return response($category, 200);
+        }
+        else{
+            return response()->json([
+                "message" => "Category missing"
+            ], 404);
+        }
+    }
+
+    public function getCategoryPosts($categoryid, Post $posts){
+        if(Category::where('id', $categoryid)->exists()){
+            return response(
+                array(
+                    $category = Category::where('id', $categoryid)->get(),
+                    $posts = Post::where('category_id', $categoryid)->get()
+                ), 200);
         }
         else{
             return response()->json([
