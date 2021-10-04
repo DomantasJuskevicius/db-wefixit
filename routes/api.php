@@ -23,6 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/posts', [PostsApiController::class, 'index']);
 Route::get('/posts/{post}', [PostsApiController::class, 'getPost']);
+Route::get('/posts/{post}/comments', [PostsApiController::class, 'getPostComments']);
 Route::post('/posts', [PostsApiController::class, 'store']);
 Route::put('/posts/{post}', [PostsApiController::class, 'update']);
 Route::delete('/posts/{post}', [PostsApiController::class, 'destroy']);
