@@ -13,7 +13,7 @@ class CommentsApiController extends Controller
         return $comments = DB::table('comments')->where('post_id', $postid)->get();
     }
 
-    public function store(){
+    public function store($postid){
         request()->validate([
             'author' => 'required',
             'comment_text'=> 'required',
@@ -23,11 +23,11 @@ class CommentsApiController extends Controller
         return Comment::create([
             'author'=> request('author'),
             'comment_text' => request('comment_text'),
-            'post_id' => request('postid'),
+            'post_id' => request($postid),
         ]);
     }
 
-    public function update(Comment $comment){
+    public function update(Comment $comment, $postid){
         request()->validate([
             'author' => 'required',
             'comment_text'=> 'required',
@@ -37,7 +37,7 @@ class CommentsApiController extends Controller
         $success = $comment->update([
             'author'=> request('title'),
             'comment_text' => request('content'),
-            'post_id' => request('postid'),
+            'post_id' => request($postid),
         ]);
     
         return['success' => $success];
