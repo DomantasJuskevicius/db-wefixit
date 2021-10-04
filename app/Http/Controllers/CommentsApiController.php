@@ -60,8 +60,22 @@ class CommentsApiController extends Controller
             return response()->json([
                 "message" => "Comment missing"
             ], 404);
-
         }
+    }
 
+    public function destroy($commentid){
+
+        if(Comment::where('id', $commentid)->exists()) {
+            $comment = Comment::find($commentid);
+            $comment->delete();
+
+            return response()->json([
+              "message" => "Comment removed"
+            ], 202);
+          } else {
+            return response()->json([
+              "message" => "Comment missing"
+            ], 404);
+          }
     }
 }
