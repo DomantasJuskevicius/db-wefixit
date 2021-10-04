@@ -22,16 +22,19 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/posts', [PostsApiController::class, 'index']);
+Route::get('/posts/{post}', [PostsApiController::class, 'getPost']);
 Route::post('/posts', [PostsApiController::class, 'store']);
 Route::put('/posts/{post}', [PostsApiController::class, 'update']);
 Route::delete('/posts/{post}', [PostsApiController::class, 'destroy']);
 
-Route::get('/comments/{postid}', [CommentsApiController::class, 'index']);
-Route::post('/comments/{postid}', [CommentsApiController::class, 'store']);
-Route::put('/comments/{postid}/{comment}', [CommentsApiController::class, 'update']);
-Route::delete('/comments/{postid}/{comment}', [CommentsApiController::class, 'destroy']);
+Route::get('/comments', [CommentsApiController::class, 'index']);
+Route::get('/comments/{comment}', [CommentsApiController::class, 'getComment']);
+Route::post('/comments', [CommentsApiController::class, 'store']);
+Route::put('/comments/{comment}', [CommentsApiController::class, 'update']);
+Route::delete('/comments/{comment}', [CommentsApiController::class, 'destroy']);
 
 Route::get('/categories', [CategoryApiController::class, 'index']);
+Route::get('/categories/{category}', [CategoryApiController::class, 'getCategory']);
 Route::post('/categories', [CategoryApiController::class, 'store']);
 Route::put('/categories/{category}', [CategoryApiController::class, 'update']);
 Route::delete('/categories/{category}', [CategoryApiController::class, 'destroy']);

@@ -12,33 +12,64 @@ class PostsApiController extends Controller
         return Post::all();
     }
 
+    public function getPost($postid){
+        if(Post::where('id', $postid)->exists()){
+            $post = Post::where('id', $postid)->get();
+            return response($post, 200);
+        } else {
+            return response()->json([
+                "message" => "Post not found"
+            ], 404);
+        }
+    }
+
     public function store(){
         request()->validate([
             'title' => 'required',
             'content' => 'required',
+            'category_id' => 'required',
         ]);
 
         return Post::create([
             'title' => request('title'),
             'content' => request('content'),
+            'category_id' => request('category_id'),
         ]);
     }
 
-    public function update(Post $post){
-        request()->validate([
-            'title' => 'required',
-            'content' => 'required',
-        ]);
+    public function update(Request $request, $postid){
+        if (Post::where('id', $postid)->exists()){
+            $post = Post::find($postid);
+            $post->title = is_null($request->title) ? $post->title : $request->title;
+            $post->content = is_null($request->content) ? $post->content : $request->content;
+            $post->category_id = is_null($request->category_id) ? $post->category_id : $request->category_id;
+            $post->save();
 
-        $success = $post->update([
-            'title' => request('title'),
-            'content' => request('content'),
-        ]);
+            return response()->json([
+                "message" => "Post update finished"
+            ], 200);
+        }
+        else{
+            return response()->json([
+                "message" => "Post not found"
+            ], 404);
     
-        return['success' => $success];
+        }
     }
-    public function destroy(Post $post){
-        $success = $post->delete();
-        return['success' => $success];
+
+    public function destroy($postid){
+        if(Post::where('id', $postid)->exists()){
+            $post = Post::find($postid);
+            $post->delete();
+
+            return response()->json([
+                "message" => "it is deleted"
+            ], 200);
+        } 
+        else{
+            return response()->json([
+                "message" => "not found"
+            ], 404);
+        }
     }
 }
