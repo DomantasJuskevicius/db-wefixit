@@ -23,7 +23,7 @@ class CommentsApiController extends Controller
         $success = Comment::create([
             'author'=> request('author'),
             'comment_text' => request('comment_text'),
-            'post_id' => request($postid),
+            'post_id' => $postid,
         ]);
 
         return['success' => $success];
