@@ -44,7 +44,7 @@ class CommentsApiController extends Controller
     
         return['success' => $success];
     }
-    public function destroy(Comment $comment){
+    public function destroy($comment){
         $success = $comment->delete();
         return['success' => $success];
     }
