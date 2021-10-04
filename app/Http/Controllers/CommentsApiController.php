@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Comment;
+use DB;
 
 class CommentsApiController extends Controller
 {
     public function index(){
-
-        return Comment::all();
+        return $comments = DB::table('comments')->where('post_id', 'postid')->get();
     }
 
     public function store(){

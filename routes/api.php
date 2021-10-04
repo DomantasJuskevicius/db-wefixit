@@ -26,10 +26,10 @@ Route::post('/posts', [PostsApiController::class, 'store']);
 Route::put('/posts/{post}', [PostsApiController::class, 'update']);
 Route::delete('/posts/{post}', [PostsApiController::class, 'destroy']);
 
-Route::get('/comments', [CommentsApiController::class, 'index']);
-Route::post('/comments', [CommentsApiController::class, 'store']);
-Route::put('/comments/{comment}', [CommentsApiController::class, 'update']);
-Route::delete('/comments/{comments}', [CommentsApiController::class, 'destroy']);
+Route::get('/comments/{postid}', [CommentsApiController::class, 'index']);
+Route::post('/comments/{postid}', [CommentsApiController::class, 'store']);
+Route::put('/comments/{postid}/{comment}', [CommentsApiController::class, 'update']);
+Route::delete('/comments/{postid}/{comment}', [CommentsApiController::class, 'destroy']);
 
 Route::get('/categories', [CategoryApiController::class, 'index']);
 Route::post('/categories', [CategoryApiController::class, 'store']);
