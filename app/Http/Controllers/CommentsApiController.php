@@ -20,11 +20,13 @@ class CommentsApiController extends Controller
             'post_id'=>'required',
         ]);
 
-        return Comment::create([
+        $success = Comment::create([
             'author'=> request('author'),
             'comment_text' => request('comment_text'),
             'post_id' => request($postid),
         ]);
+
+        return['success' => $success];
     }
 
     public function update(Comment $comment, $postid){
