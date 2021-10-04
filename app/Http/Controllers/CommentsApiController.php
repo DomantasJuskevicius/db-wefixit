@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Comment;
-use DB;
 use App\Quotation;
+
+use DB;
 
 class CommentsApiController extends Controller
 {
@@ -29,7 +30,7 @@ class CommentsApiController extends Controller
         return['success' => $success];
     }
 
-    public function update(Comment $comment, $postid){
+    public function update($postid, Comment $comment){
         request()->validate([
             'author' => 'required',
             'comment_text'=> 'required',
@@ -44,7 +45,7 @@ class CommentsApiController extends Controller
     
         return['success' => $success];
     }
-    public function destroy($comment){
+    public function destroy($postid, Comment $comment){
         $success = $comment->delete();
         return['success' => $success];
     }
