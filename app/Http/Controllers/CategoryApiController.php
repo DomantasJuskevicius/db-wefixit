@@ -30,7 +30,7 @@ class CategoryApiController extends Controller
             'description' => 'required',
         ]);
 
-        $success = $Category->update([
+        $success = $category->update([
             'title'=> request('title'),
             'description' => request('description')
         ]);
