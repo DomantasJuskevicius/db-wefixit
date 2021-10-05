@@ -2,7 +2,13 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -37,5 +43,44 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    /**
+     * @param Request $request
+     * @param Throwable $exception
+     * @return JsonResponse|Response|\Symfony\Component\HttpFoundation\Response
+     * @throws Throwable
+     */
+    public function render($request, Throwable $exception)
+    {
+        if ($exception instanceof ModelNotFoundException && $request->wantsJson()) {
+            return response()->json([
+                'status' => '404',
+                'message' => 'Model Not Found',
+            ], 404);
+        }
+        
+        if (($exception instanceof MethodNotAllowedHttpException && $exception->getStatusCode() === 405)) {
+            return response()->json([
+                'status' => '405',
+                'message' => 'Method not allowed',
+            ], 405);
+        }
+
+        if (($exception instanceof NotFoundHttpException && $exception->getStatusCode() === 404)) {
+            return response()->json([
+                'status' => '404',
+                'message' => 'Endpoint Not Found',
+            ], 404);
+        }
+
+        if ($exception->getStatusCode() === 500) {
+            return response()->json([
+                'status' => '500',
+                'message' => 'Internal Server Error',
+            ], 500);
+        }
+
+        return parent::render($request, $exception);
     }
 }
