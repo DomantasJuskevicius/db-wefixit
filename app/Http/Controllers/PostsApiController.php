@@ -23,7 +23,7 @@ class PostsApiController extends Controller
             ], 404);
         }
     }
-
+    
     public function getPostComments($postid, Comment $comments){
         if(Post::where('id', $postid)->exists()){
             return response(array(
