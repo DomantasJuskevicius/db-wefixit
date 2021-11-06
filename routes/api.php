@@ -4,6 +4,7 @@ use App\Models\Post;
 use App\Http\Controllers\PostsApiController;
 use App\Http\Controllers\CommentsApiController;
 use App\Http\Controllers\CategoryApiController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 /*
