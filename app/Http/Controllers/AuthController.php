@@ -7,42 +7,47 @@ use Validator;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
+
 class AuthController extends Controller
 {
-    public function __construct(){
-        $this->middleware('auth:api',['except' => ['login', 'register']]);
+    public function __construct() {
+        $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
     public function login(){
-        $credentials = request(['email', 'password']);
+    	$credentials = request(['email', 'password']);
+
 
         if(! $token = auth()->attempt($credentials)){
-            return response()->json(['error' => 'invalid email or password'], 401);
+            return response()->json(['error' => 'Invalid email or password'], 401);
         }
 
-        return this->respondWithToken($token);
+        return $this->respondWithToken($token);
     }
 
-    public function responsWithToken($token){
+    protected function respondWithToken($token){
         return response()->json([
             'access_token' => $token,
-            'access_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL()*60,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60,
             'user' => auth()->user()
         ]);
     }
 
     public function logout(){
         auth()->logout();
-        return response()->json(['msg' => 'User successfully logged out']);
+
+        return response()->json(['msg'=>'user successfully logged out']);
     }
 
-    public function refresh(){
-        return $this->responsWithToken(auth()-> refresh());
+    public function refresh() {
+        return $this->respondWithToken(auth()->refresh());
     }
 
     public function me(){
-        return response()->json(auth()->user());
+        return response()->json(
+            auth()->user()
+        );
     }
 
     public function register(Request $request) {
@@ -66,5 +71,4 @@ class AuthController extends Controller
             'user' => $user
         ], 201);
     }
-
 }
