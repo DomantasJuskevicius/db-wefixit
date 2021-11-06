@@ -22,9 +22,10 @@ class AuthController extends Controller
 
     public function responsWithToken($token){
         return response()->json([
-            'token' => $token,
+            'access_token' => $token,
             'access_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL()*60
+            'expires_in' => auth()->factory()->getTTL()*60,
+            'user' => auth()->user()
         ]);
     }
 
