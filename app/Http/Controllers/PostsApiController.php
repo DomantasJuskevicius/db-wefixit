@@ -106,7 +106,7 @@ class PostsApiController extends Controller
 
         if(! $isGuest){
             $user_id = auth()->user()->id;
-            user_role = auth()->user()->role;
+            $user_role = auth()->user()->role;
 
             if(Post::where('id', $postid)->exists()){
                 $post = Post::find($postid);
