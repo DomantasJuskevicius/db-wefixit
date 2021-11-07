@@ -36,6 +36,7 @@ Route::group([
     Route::get('/me', [AuthController::class, 'me']);
 });
 
+
 Route::get('/posts', [PostsApiController::class, 'index']);
 Route::get('/posts/{post}', [PostsApiController::class, 'getPost']);
 Route::get('/posts/{post}/comments', [PostsApiController::class, 'getPostComments']);
