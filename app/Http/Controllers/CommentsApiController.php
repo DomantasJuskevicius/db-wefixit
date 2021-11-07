@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Comment;
 use App\Quotation;
-
+use Illuminate\Support\Facades\Auth;
 use DB;
 
 class CommentsApiController extends Controller
