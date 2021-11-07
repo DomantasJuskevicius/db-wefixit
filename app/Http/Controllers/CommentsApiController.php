@@ -50,37 +50,63 @@ class CommentsApiController extends Controller
 
     public function update(Request $request, $commentid){
 
-        if (Comment::where('id', $commentid)->exists()) {
-            $comment = Comment::find($commentid);
-            $comment->author = is_null($request->author) ? $comment->author : $request->author;
-            $comment->comment_text = is_null($request->comment_text) ? $comment->comment_text : $request->comment_text;
-            $comment->post_id = is_null($request->post_id) ? $comment->post_id : $request->post_id;
-            $comment->save();
+        $isGuest = auth()->guest();
 
+        if(! $isGuest){
+
+            $user_id = auth()->user()->id;
+            $user_role = auth()->user()->role;
+
+            if(Comment::where('id', $commentid)->exists()){
+                $comment = Comment::find($commentid);
+
+                if($user_id == $comment->user_id || $user_role == 1){
+                    $comment->author = is_null($request->author) ? $comment->author : $request->author;
+                    $comment->comment_text = is_null($request->comment_text) ? $comment->comment_text : $request->comment_text;
+                    $comment->post_id = is_null($request->post_id) ? $comment->post_id : $request->post_id;
+                    $comment->user_id = $comment->user_id;
+                    $comment->save();
+
+                    return response()->json([
+                        "message" => "comment updated"
+                    ], 200);
+                    } 
+                    else {
+                    return response()->json([
+                        "message" => "Comment missing"
+                    ], 404);
+
+                }
+            }
+        }
+        else{
             return response()->json([
-                "message" => "comment updated"
-            ], 200);
-            } 
-            else {
-            return response()->json([
-                "message" => "Comment missing"
-            ], 404);
+                "message" => "Unauthorized"
+            ], 401);
         }
     }
 
     public function destroy($commentid){
 
-        if(Comment::where('id', $commentid)->exists()) {
-            $comment = Comment::find($commentid);
-            $comment->delete();
+        $isGues = auth()->guest();
 
-            return response()->json([
-              "message" => "Comment removed"
-            ], 202);
-          } else {
-            return response()->json([
-              "message" => "Comment missing"
-            ], 404);
-          }
+        if(! $isGuest){
+            $user_id = auth()->user()->id;
+            $user_role = auth()->user()->role;
+            
+            if(Comment::where('id', $commentid)->exists()) {
+                $comment = Comment::find($commentid);
+                $comment->delete();
+    
+                return response()->json([
+                  "message" => "Comment removed"
+                ], 202);
+            } 
+            else {
+                return response()->json([
+                    "message" => "Comment missing"
+                ], 404);
+            }  
+        } 
     }
 }
