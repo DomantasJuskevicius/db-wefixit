@@ -35,9 +35,17 @@ class AuthController extends Controller
     }
 
     public function logout(){
-        //auth()->logout();
+        $isGuest = auth()->guest();
 
-        return response()->json(['msg'=>'user successfully logged out']);
+        if(! $isGuest){
+
+            auth()->logout();
+
+            return response()->json(['msg'=>'user successfully logged out']);
+        }
+        else if($isGuest){
+            return response()->json(["message" => "Unauthorized"], 401);
+        }
     }
 
     public function refresh() {
