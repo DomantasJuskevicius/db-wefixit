@@ -28,19 +28,24 @@ class CommentsApiController extends Controller
     }
 
     public function store(){
-        request()->validate([
-            'author' => 'required',
-            'comment_text'=> 'required',
-            'post_id'=>'required',
-        ]);
 
-        $success = Comment::create([
-            'author'=> request('author'),
-            'comment_text' => request('comment_text'),
-            'post_id' => request('post_id'),
-        ]);
+        $isGuest = auth()->guest();
 
-        return['success' => $success];
+        if(! $isGuest){
+            $user_id = auth()->user()->id;
+
+            return Comment::create([
+                    'author'=> request('author'),
+                    'comment_text' => request('comment_text'),
+                    'post_id' => request('post_id'),
+                    'user_id' => $user_id,
+                ]);
+        }
+        else{
+            return response()->json([
+                "message" => "Unauthorized"
+              ], 401);
+        }
     }
 
     public function update(Request $request, $commentid){
