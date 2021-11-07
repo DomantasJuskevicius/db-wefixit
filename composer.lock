@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bbbe0926df5666423a87ed237b1e2ee8",
+    "content-hash": "8345eec73e8eeec61d4e2ae7020118b7",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1131,6 +1131,103 @@
             "time": "2021-11-02T13:53:22+00:00"
         },
         {
+            "name": "laravel/lumen-framework",
+            "version": "v8.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/lumen-framework.git",
+                "reference": "77a9dd546eb1283cc6ca4b62bb146b20d74e2ef6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/lumen-framework/zipball/77a9dd546eb1283cc6ca4b62bb146b20d74e2ef6",
+                "reference": "77a9dd546eb1283cc6ca4b62bb146b20d74e2ef6",
+                "shasum": ""
+            },
+            "require": {
+                "dragonmantank/cron-expression": "^3.0.2",
+                "illuminate/auth": "^8.65",
+                "illuminate/broadcasting": "^8.65",
+                "illuminate/bus": "^8.65",
+                "illuminate/cache": "^8.65",
+                "illuminate/collections": "^8.65",
+                "illuminate/config": "^8.65",
+                "illuminate/console": "^8.65",
+                "illuminate/container": "^8.65",
+                "illuminate/contracts": "^8.65",
+                "illuminate/database": "^8.65",
+                "illuminate/encryption": "^8.65",
+                "illuminate/events": "^8.65",
+                "illuminate/filesystem": "^8.65",
+                "illuminate/hashing": "^8.65",
+                "illuminate/http": "^8.65",
+                "illuminate/log": "^8.65",
+                "illuminate/macroable": "^8.65",
+                "illuminate/pagination": "^8.65",
+                "illuminate/pipeline": "^8.65",
+                "illuminate/queue": "^8.65",
+                "illuminate/support": "^8.65",
+                "illuminate/testing": "^8.65",
+                "illuminate/translation": "^8.65",
+                "illuminate/validation": "^8.65",
+                "illuminate/view": "^8.65",
+                "nikic/fast-route": "^1.3",
+                "php": "^7.3|^8.0",
+                "symfony/console": "^5.1",
+                "symfony/error-handler": "^5.1",
+                "symfony/http-foundation": "^5.1",
+                "symfony/http-kernel": "^5.1",
+                "symfony/mime": "^5.1",
+                "symfony/var-dumper": "^5.1",
+                "vlucas/phpdotenv": "^5.2"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.4.2",
+                "phpunit/phpunit": "^8.5.19|^9.5.8"
+            },
+            "suggest": {
+                "laravel/tinker": "Required to use the tinker console command (^2.0).",
+                "nyholm/psr7": "Required to use PSR-7 bridging features (^1.2).",
+                "symfony/psr-http-message-bridge": "Required to use PSR-7 bridging features (^2.0)."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "8.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laravel\\Lumen\\": "src/"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "The Laravel Lumen Framework.",
+            "homepage": "https://lumen.laravel.com",
+            "keywords": [
+                "framework",
+                "laravel",
+                "lumen"
+            ],
+            "support": {
+                "issues": "https://github.com/laravel/lumen-framework/issues",
+                "source": "https://github.com/laravel/lumen-framework"
+            },
+            "time": "2021-10-19T15:37:51+00:00"
+        },
+        {
             "name": "laravel/sanctum",
             "version": "v2.12.1",
             "source": {
@@ -1323,32 +1420,29 @@
         },
         {
             "name": "lcobucci/jwt",
-            "version": "3.2.5",
+            "version": "3.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lcobucci/jwt.git",
-                "reference": "82be04b4753f8b7693b62852b7eab30f97524f9b"
+                "reference": "c1123697f6a2ec29162b82f170dd4a491f524773"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/82be04b4753f8b7693b62852b7eab30f97524f9b",
-                "reference": "82be04b4753f8b7693b62852b7eab30f97524f9b",
+                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/c1123697f6a2ec29162b82f170dd4a491f524773",
+                "reference": "c1123697f6a2ec29162b82f170dd4a491f524773",
                 "shasum": ""
             },
             "require": {
+                "ext-mbstring": "*",
                 "ext-openssl": "*",
-                "php": ">=5.5"
+                "php": "^5.6 || ^7.0"
             },
             "require-dev": {
-                "mdanter/ecc": "~0.3.1",
                 "mikey179/vfsstream": "~1.5",
                 "phpmd/phpmd": "~2.2",
                 "phpunit/php-invoker": "~1.1",
-                "phpunit/phpunit": "~4.5",
+                "phpunit/phpunit": "^5.7 || ^7.3",
                 "squizlabs/php_codesniffer": "~2.3"
-            },
-            "suggest": {
-                "mdanter/ecc": "Required to use Elliptic Curves based algorithms."
             },
             "type": "library",
             "extra": {
@@ -1379,9 +1473,19 @@
             ],
             "support": {
                 "issues": "https://github.com/lcobucci/jwt/issues",
-                "source": "https://github.com/lcobucci/jwt/tree/3.2"
+                "source": "https://github.com/lcobucci/jwt/tree/3.3.3"
             },
-            "time": "2018-11-11T12:22:26+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/lcobucci",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/lcobucci",
+                    "type": "patreon"
+                }
+            ],
+            "time": "2020-08-20T13:22:28+00:00"
         },
         {
             "name": "league/commonmark",
@@ -2133,6 +2237,56 @@
                 "source": "https://github.com/nette/utils/tree/v3.2.5"
             },
             "time": "2021-09-20T10:50:11+00:00"
+        },
+        {
+            "name": "nikic/fast-route",
+            "version": "v1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nikic/FastRoute.git",
+                "reference": "181d480e08d9476e61381e04a71b34dc0432e812"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nikic/FastRoute/zipball/181d480e08d9476e61381e04a71b34dc0432e812",
+                "reference": "181d480e08d9476e61381e04a71b34dc0432e812",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8.35|~5.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastRoute\\": "src/"
+                },
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Nikita Popov",
+                    "email": "nikic@php.net"
+                }
+            ],
+            "description": "Fast request router for PHP",
+            "keywords": [
+                "router",
+                "routing"
+            ],
+            "support": {
+                "issues": "https://github.com/nikic/FastRoute/issues",
+                "source": "https://github.com/nikic/FastRoute/tree/master"
+            },
+            "time": "2018-02-13T20:26:39+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -8238,7 +8392,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.3|^8.0"
+        "php": "^8.0"
     },
     "platform-dev": [],
     "plugin-api-version": "2.1.0"
