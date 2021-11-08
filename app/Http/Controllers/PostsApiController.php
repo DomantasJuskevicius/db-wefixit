@@ -119,31 +119,20 @@ class PostsApiController extends Controller
 
             if(Post::where('id', $postid)->exists()){
                 $post = Post::find($postid);
-                if ($user_id == $post->user_id || $user_role == 1)
-                {
-
+                if ($user_id == $post->user_id || $user_role == 1){
                     $post->delete();
-
-                    return response()
-                        ->json(["message" => "post deleted"], 202);
+                    return response()->json(["message" => "post deleted"], 202);
                 }
-                else
-                {
-                    return response()
-                        ->json(["message" => "Unauthorized"], 401);
+                else{
+                    return response()->json(["message" => "Unauthorized"], 401);
                 }
-
             }
-            else
-            {
-                return response()
-                    ->json(["message" => "post not found"], 404);
+            else{
+                return response()->json(["message" => "post not found"], 404);
             }
         }
-        else
-        {
-            return response()
-                ->json(["message" => "Unauthorized"], 401);
+        else{
+            return response()->json(["message" => "Unauthorized"], 401);
         }
     }
 }
