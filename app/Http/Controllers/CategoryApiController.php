@@ -71,16 +71,14 @@ class CategoryApiController extends Controller
 
             if(Category::where('id', $categoryid)->exists()){
 
-                $category = Category::find($id);
+                $category = Category::find($categoryid);
 
                 if($user_id == $category->user_id || $user_role == 1){
                     $category->title = is_null($request->title) ? $category->title : $request->title;
                     $category->description = is_null($request->description) ? $category->description : $request->description;
                     $category->save();
 
-                    return response()->json([
-                        "message" => "category update finished"
-                    ], 200);
+                    return response()->json(["message" => "category update finished"], 200);
                 }else{
                     return response()->json([
                         "message" => "Unauthorized"
