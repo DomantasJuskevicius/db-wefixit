@@ -95,7 +95,7 @@ class CommentsApiController extends Controller
         }
     }
 
-    public function destroy($commentid){
+    public function destroy($comment_id){
 
         $isGues = auth()->guest();
 
@@ -103,8 +103,8 @@ class CommentsApiController extends Controller
             $user_id = auth()->user()->id;
             $user_role = auth()->user()->role;
             
-            if(Comment::where('id', $commentid)->exists()) {
-                $comment = Comment::find($commentid);
+            if(Comment::where('id', $comment_id)->exists()) {
+                $comment = Comment::find($comment_id);
                 if($user_id == $comment->user_id || $user_role == 1){
                     $comment->delete();
                     return response()->json(["message" => "Comment deleted"], 202);
