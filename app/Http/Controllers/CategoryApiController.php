@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Category;
 use App\Models\Post;
+use App\Models\Comment;
+use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryApiController extends Controller
 {
@@ -19,9 +21,7 @@ class CategoryApiController extends Controller
             return response($category, 200);
         }
         else{
-            return response()->json([
-                "message" => "Category missing"
-            ], 404);
+            return response()->json(["message" => "Category missing"], 404);
         }
     }
 
@@ -46,42 +46,98 @@ class CategoryApiController extends Controller
             'description' => 'required',
         ]);
 
-        return Category::create([
-            'title'=> request('title'),
-            'description' => request('description')
-        ]);
+        $isGuest = auth()->guest();
+
+        if(! $isGuest){
+            $user_id = auth()->user()->id;
+
+            return Category::create([
+                'title'=> request('title'),
+                'description' => request('description')
+            ]);   
+        }
+        else{
+            return response()->json(["message" => "Unauthorized"], 401);
+        }
     }
 
     public function update(Request $request, $categoryid){
-        if(Category::where('id', $categoryid)->exists()){
-            $category = Category::find($categoryid);
-            $category->title = is_null($request->title) ? $category->title : $request->title;
-            $category->description = is_null($request->description) ? $category->description : $request->description;
-            $category->save();
+        $isGuest = auth()->guest();
 
-            return response()->json([
-                "message" => "category update finished"
-            ], 200);
+        if(! $isGuest){
+            $user_id = auth()->user()->id;
+            $user_role = auth()->user()->role;
+
+            if(Category::where('id', $categoryid)->exists()){
+
+                $category = Category::find($id);
+
+                if($user_id == $category->user_id || $user_role == 1){
+                    $category->title = is_null($request->title) ? $category->title : $request->title;
+                    $category->description = is_null($request->description) ? $category->description : $request->description;
+                    $category->save();
+
+                    return response()->json([
+                        "message" => "category update finished"
+                    ], 200);
+                }else{
+                    return response()->json([
+                        "message" => "Unauthorized"
+                    ], 401);
+                }
+            }else{
+                return response()->json([
+                    "message" => "Category not found"
+                ], 404);
+            }
         }
         else{
             return response()->json([
-                "message" => "category missing"
-            ], 404);
+                "message" => "Unauthorized"
+              ], 401);
         }
     }
-    public function destroy($categoryid){
-        if(Category::where('id', $categoryid)->exists()){
-            $category = Category::find($categoryid);
-            $category->delete();
+    public function destroy($id)
+    {
 
-            return response()->json([
-                "message" => "Category removed"
-            ], 202);
+        $isGuest = auth()->guest();
+
+        //Checks if user is logged in.
+        if (!$isGuest)
+        {
+
+            $user_id = auth()->user()->id;
+            $user_role = auth()->user()->role;
+
+            //Checks if Category exists
+            if (Category::where('id', $id)->exists())
+            {
+
+                $category = Category::find($id);
+
+                if ($user_id == $category->user_id || $user_role == 1)
+                {
+
+                    $category->delete();
+
+                    return response()
+                        ->json(["message" => "Category deleted"], 202);
+                }
+                else
+                {
+                    return response()
+                        ->json(["message" => "Unauthorized"], 401);
+                }
+            }
+            else
+            {
+                return response()
+                    ->json(["message" => "Category not found"], 404);
+            }
         }
-        else{
-            return response()->json([
-                "message" => "Category missing"
-            ], 404);
+        else
+        {
+            return response()->json(["message" => "Unauthorized"], 401);
         }
     }
 }
