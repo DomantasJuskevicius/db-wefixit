@@ -53,7 +53,8 @@ class CategoryApiController extends Controller
 
             return Category::create([
                 'title'=> request('title'),
-                'description' => request('description')
+                'description' => request('description'),
+                'user_id' => $user_id,
             ]);   
         }
         else{
