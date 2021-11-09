@@ -6,6 +6,7 @@ use App\Models\Comment;
 use App\Http\Controllers\PostsApiController;
 use App\Http\Controllers\CommentsApiController;
 use App\Http\Controllers\CategoryApiController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -36,7 +37,7 @@ Route::group([
     Route::get('/me', [AuthController::class, 'me']);
 });
 
-Route::get('/users', [AuthController::class, 'index']);
+Route::get('/users', [UserController::class, 'index']);
 
 Route::get('/posts', [PostsApiController::class, 'index']);
 Route::get('/posts/{post}', [PostsApiController::class, 'getPost']);
