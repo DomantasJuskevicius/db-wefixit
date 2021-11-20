@@ -13,7 +13,11 @@ use DB;
 class CommentsApiController extends Controller
 {
     public function index(){
-        return Comment::all();
+        $comments = Comment::all();
+        return response()->json([
+            'status'=>200,
+            'comments'=>$comments,
+        ]);
     }
 
     public function getComment($commentid){

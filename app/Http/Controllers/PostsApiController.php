@@ -12,7 +12,11 @@ class PostsApiController extends Controller
 {
     public function index(){
 
-        return Post::all();
+        $posts = Post::all();
+        return response()->json([
+            'status'=>200,
+            'posts'=>$posts,
+        ]);
     }
 
     public function getPost($postid){
