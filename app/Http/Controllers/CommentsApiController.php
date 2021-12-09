@@ -39,9 +39,10 @@ class CommentsApiController extends Controller
 
         if(! $isGuest){
             $user_id = auth()->user()->id;
+            $user_name = auth()->user()->name;
             if(Post::where('id', request('post_id'))->exists()){
                 return Comment::create([
-                    'author'=> request('author'),
+                    'author'=> $user_name,
                     'comment_text' => request('comment_text'),
                     'post_id' => request('post_id'),
                     'user_id' => $user_id,]);
@@ -65,12 +66,13 @@ class CommentsApiController extends Controller
 
             $user_id = auth()->user()->id;
             $user_role = auth()->user()->role;
+            $user_name = auth()->user()->name;
 
             if(Comment::where('id', $commentid)->exists()){
                 $comment = Comment::find($commentid);
 
                 if($user_id == $comment->user_id || $user_role == 1){
-                    $comment->author = is_null($request->author) ? $comment->author : $request->author;
+                    $comment->author = $comment->author_name;
                     $comment->comment_text = is_null($request->comment_text) ? $comment->comment_text : $request->comment_text;
                     $comment->post_id = $comment->post_id;
                     $comment->user_id = $comment->user_id;
